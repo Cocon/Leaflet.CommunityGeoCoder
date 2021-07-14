@@ -4,6 +4,7 @@
   "description": "Leaflet.js plugin for geocoding addressed of Japan",
   "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
     "test": "jest"
   },
   "repository": {
@@ -21,11 +22,16 @@
   "homepage": "https://github.com/YUUKIToriyama/Leaflet.CommunityGeoCoder#readme",
   "devDependencies": {
     "@types/leaflet": "^1.7.4",
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
     "jest": "^27.0.6",
     "ts-jest": "^27.0.3",
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "leaflet": "^1.7.1"
+    "@geolonia/normalize-japanese-addresses": "^2.0.0",
+    "leaflet": "^1.7.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }
