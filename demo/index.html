@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Demo | Leaflet.CommunityGeoCoder</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css">
+	<script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@coconmap/leaflet.communitygeocoder@0.0.1/dist/bundle.js"></script>
+	<style>
+		#my_map {
+			width: 500px;
+			height: 500px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="my_map"></div>
+	<script>
+		const map = new L.map("my_map", {
+			center: [35.4477712, 139.6425415],
+			zoom: 13
+		});
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(map);
+		const geoCoderControl = new GeoCoder();
+		geoCoderControl.addTo(map);
+	</script>
+</body>
+
+</html>
