@@ -1,17 +1,7 @@
 import React from 'react';
-import { normalize } from '@geolonia/normalize-japanese-addresses';
-
-const executeNormalize = (address: string) => {
-	normalize(address).then(result => {
-		const output = Object.entries(result).map(entry => {
-			return entry.join(":\t");
-		}).join("\n");
-		console.log(result);
-		alert(output);
-	});
-};
 
 export interface InterfaceProps {
+	logic: (address: string) => void
 }
 
 const Interface: React.FunctionComponent<InterfaceProps> = (props) => {
@@ -32,7 +22,7 @@ const Interface: React.FunctionComponent<InterfaceProps> = (props) => {
 
 	React.useEffect(() => {
 		buttonRef.current?.addEventListener("click", () => {
-			executeNormalize(inputRef.current?.value || "");
+			props.logic(inputRef.current?.value || "");
 		})
 	}, []);
 
