@@ -17,10 +17,26 @@ export default class Control extends HTMLElement {
 		});
 		form.appendChild(button);
 
+		const style = document.createElement("style");
+		style.innerHTML = `
+			div {
+				display: flex;
+				border: 2px solid rgba(0, 0, 0, 0.2);
+				border-radius: 4px;
+			}
+			button {
+				width: 50px;
+				height: 50px;
+				cursor: pointer;
+			}
+		`;
+
 		const shadowDOM = this.attachShadow({
 			mode: "open"
 		});
+		shadowDOM.appendChild(style);
 		shadowDOM.appendChild(form);
+
 	}
 }
 customElements.define("plugin-control", Control);
