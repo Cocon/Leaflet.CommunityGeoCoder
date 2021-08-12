@@ -20,11 +20,11 @@ Leaflet 1.x 系に対応しています。
 
 ### From CDN (Recommended)
 
-```terminal
-https://cdn.jsdelivr.net/npm/@coconmap/leaflet.communitygeocoder/dist/index.min.js
-```
-
 本プラグインは CDN からも利用可能です。サンプルコードは[こちら](https://cocon.github.io/Leaflet.CommunityGeoCoder/demo/)にございます。
+
+```terminal
+https://cdn.jsdelivr.net/npm/@coconmap/leaflet.communitygeocoder/dist/bundle.js
+```
 
 ### From NPM (Experimental)
 
