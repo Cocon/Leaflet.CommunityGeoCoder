@@ -1,10 +1,8 @@
 import L from 'leaflet';
 import * as Geolonia from '@geolonia/normalize-japanese-addresses';
-import React from 'react';
-import ReactDOM from 'react-dom';
 
 import PopupContent from './PopupContent';
-import Interface from './Interface';
+import Control from './Control';
 
 class Utils {
 	static createPin = (map: L.Map, latlng: L.LatLng, data: { pref: string, city: string, town: string }) => {
@@ -34,10 +32,7 @@ export class GeoCoder extends L.Control {
 
 	onAdd = (map: L.Map) => {
 		this._div = L.DomUtil.create("div", "leaflet-community-geocoder");
-		ReactDOM.render(
-			<Interface logic={GeoCoder.geoCoder(map)} />,
-			this._div
-		);
+		this._div.appendChild(new Control(GeoCoder.geoCoder(map)));
 		return this._div;
 	}
 

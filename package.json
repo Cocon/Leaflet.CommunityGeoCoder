@@ -14,7 +14,7 @@
     "url": "git+https://github.com/Cocon/Leaflet.CommunityGeoCoder.git"
   },
   "keywords": [
-    "leaflet"
+    "leaflet-plugin"
   ],
   "author": "YUUKIToriyama <github@toriyama.dev>",
   "license": "MIT",
@@ -24,8 +24,6 @@
   "homepage": "https://github.com/Cocon/Leaflet.CommunityGeoCoder#readme",
   "devDependencies": {
     "@types/leaflet": "^1.7.4",
-    "@types/react": "^17.0.14",
-    "@types/react-dom": "^17.0.9",
     "jest": "^27.0.6",
     "ts-jest": "^27.0.3",
     "ts-loader": "^9.2.4",
@@ -35,9 +33,8 @@
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
+    "@emotion/css": "^11.1.3",
     "@geolonia/normalize-japanese-addresses": "^2.1.0",
-    "leaflet": "^1.7.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "leaflet": "^1.7.1"
   }
 }
