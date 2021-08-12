@@ -3,9 +3,24 @@ import * as Geolonia from '@geolonia/normalize-japanese-addresses';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import PopupContent from './PopupContent';
 import Interface from './Interface';
 
 class Utils {
+	static createPin = (map: L.Map, latlng: L.LatLng, data: { pref: string, city: string, town: string }) => {
+		const marker = L.marker(latlng);
+		const popup = L.popup().setContent(new PopupContent({
+			"都道府県": data.pref,
+			"市区町村": data.city,
+			"町名": data.town,
+			"緯度": latlng.lat,
+			"経度": latlng.lng
+		}));
+		marker.bindPopup(popup);
+		marker.setLatLng(latlng);
+		marker.addTo(map);
+		marker.openPopup();
+	}
 	static moveTo = (map: L.Map, location: L.LatLng) => {
 		map.flyTo(location);
 	};
@@ -38,6 +53,11 @@ export class GeoCoder extends L.Control {
 					lng: result.lng || 135
 				});
 				Utils.moveTo(map, latlng);
+				Utils.createPin(map, latlng, {
+					pref: result.pref,
+					city: result.city,
+					town: result.town
+				});
 			} else if (result.level == 2) {
 				// level 2 までしか判別できなかった場合は、
 				// 別途データベースに問い合わせ、大まかな位置情報を取得する
@@ -54,6 +74,11 @@ export class GeoCoder extends L.Control {
 						lng: parseFloat(destination.lng)
 					});
 					Utils.moveTo(map, latlng);
+					Utils.createPin(map, latlng, {
+						pref: result.pref,
+						city: result.city,
+						town: destination.town + destination.koaza
+					});
 				});
 			} else {
 				alert("もう少し詳しい住所を入力してください");
