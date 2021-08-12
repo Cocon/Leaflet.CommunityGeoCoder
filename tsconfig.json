@@ -13,5 +13,8 @@
         "esModuleInterop": true,
         "isolatedModules": true,
         "typeRoots": ["src/@types"]
-    }
+    },
+    "include": [
+        "src/**/*"
+    ]
 }
