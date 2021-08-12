@@ -6,13 +6,33 @@ Leaflet.js 地図に住所検索機能を追加するプラグインです。
 
 ## Demo
 
-開発中
+[こちら](https://cocon.github.io/Leaflet.CommunityGeoCoder/demo/)に簡単なデモとサンプルコードをご用意しています。
+
+![demo page](https://i.imgur.com/7oXSJMr.png)
+
+住所を入力してボタンを押すと、地図がその場所まで遷移します。
+町名まで入れていただくとかなりピンポイントな地点まで移動します。
+是非デモページを触って、株式会社 Geolonia 様の高性能なジオコーディングをお試しください！
 
 ## Usage
 
 Leaflet 1.x 系に対応しています。
 
-### Basic usage
+### From CDN (Recommended)
+
+本プラグインは CDN からも利用可能です。サンプルコードは[こちら](https://cocon.github.io/Leaflet.CommunityGeoCoder/demo/)にございます。
+
+```terminal
+https://cdn.jsdelivr.net/npm/@coconmap/leaflet.communitygeocoder/dist/bundle.js
+```
+
+### From NPM (Experimental)
+
+```bash
+npm install @coconmap/leaflet.communitygeocoder
+```
+
+#### Basic usage
 
 ```typescript
 import L from "leaflet";
@@ -23,7 +43,7 @@ const geoCoderControl = new GeoCoder();
 geoCoderControl.addTo(map);
 ```
 
-### Without control
+#### Without control
 
 ```typescript
 import L from "leaflet";
@@ -40,6 +60,6 @@ YUUKIToriyama([@CoconMap](https://mobile.twitter.com/CoconMap/))
 
 ## Thanks to
 
+- [geolonia/community-geocoder](https://github.com/geolonia/community-geocoder)
 - [geolonia/japanese-addresses](https://github.com/geolonia/japanese-addresses)
 - [geolonia/normalize-japanese-addresses](https://github.com/geolonia/normalize-japanese-addresses)
-- [geolonia/community-geocoder](https://github.com/geolonia/community-geocoder)
