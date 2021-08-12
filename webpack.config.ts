@@ -2,7 +2,10 @@ import { Configuration } from 'webpack';
 
 const config: Configuration = {
 	entry: {
-		'bundle': ["./src/index.tsx"]
+		'bundle': ["./src/index.ts"]
+	},
+	externals: {
+		leaflet: "L"
 	},
 	output: {
 		filename: 'bundle.js',
@@ -15,7 +18,7 @@ const config: Configuration = {
 	module: {
 		rules: [
 			{
-				test: /\.tsx?$/,
+				test: /\.ts$/,
 				use: 'ts-loader',
 			},
 			{

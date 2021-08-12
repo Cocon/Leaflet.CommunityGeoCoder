@@ -7,11 +7,13 @@
         "outDir": "./dist",
         "declaration": true,
         "module": "CommonJS",
-        "jsx": "react",
         "lib": ["ES6", "ES2017", "DOM"],
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "isolatedModules": true,
         "typeRoots": ["src/@types"]
-    }
+    },
+    "include": [
+        "src/**/*"
+    ]
 }
