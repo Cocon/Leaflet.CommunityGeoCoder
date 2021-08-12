@@ -7,6 +7,9 @@ Leaflet.js 地図に住所検索機能を追加するプラグインです。
 ## Demo
 
 [こちら](https://cocon.github.io/Leaflet.CommunityGeoCoder/demo/)に簡単なデモとサンプルコードをご用意しています。
+
+![demo page](https://i.imgur.com/7oXSJMr.png)
+
 住所を入力してボタンを押すと、地図がその場所まで遷移します。
 町名まで入れていただくとかなりピンポイントな地点まで移動します。
 是非デモページを触って、株式会社 Geolonia 様の高性能なジオコーディングをお試しください！
