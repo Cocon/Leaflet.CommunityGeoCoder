@@ -6,16 +6,6 @@ import ReactDOM from 'react-dom';
 import Interface from './Interface';
 
 class Utils {
-	static normalize = (address: string): L.LatLng => {
-		Geolonia.normalize(address).then(result => {
-			const output = Object.entries(result).map(entry => {
-				return entry.join(":\t");
-			}).join("\n");
-			console.log(result);
-			alert(output);
-		});
-		return L.latLng(35.0, 135.0);
-	};
 	static moveTo = (map: L.Map, location: L.LatLng) => {
 		map.flyTo(location);
 	};
@@ -37,9 +27,17 @@ export class GeoCoder extends L.Control {
 	}
 
 	static geoCoder = (map: L.Map) => {
-		return (address: string) => {
-			const destination = Utils.normalize(address);
-			Utils.moveTo(map, destination);
+		return async (address: string) => {
+			const result = await Geolonia.normalize(address);
+			console.log(result);
+			// level 3 まで判別できた場合には、緯度経度情報も返ってくる
+			// https://github.com/geolonia/normalize-japanese-addresses/pull/113
+			if (result.level >= 3) {
+				const destination = L.latLng(result.lat as number, result.lng as number);
+				Utils.moveTo(map, destination);
+			} else {
+				alert("もう少し詳しい住所を入力してください");
+			}
 		}
 	}
 }
