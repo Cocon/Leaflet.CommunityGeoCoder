@@ -1,6 +1,6 @@
 {
   "name": "@coconmap/leaflet.communitygeocoder",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Leaflet.js plugin for geocoding addressed of Japan",
   "main": "dist/index.js",
   "scripts": {
