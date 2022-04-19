@@ -6,7 +6,9 @@ import Control from './Control';
 
 class Utils {
 	static createPin = (map: L.Map, latlng: L.LatLng, data: { pref: string, city: string, town: string }) => {
-		const marker = L.marker(latlng);
+		const marker = L.marker(latlng, {
+			alt: `${data.pref} ${data.city} ${data.town}`
+		});
 		const popup = L.popup().setContent(new PopupContent({
 			"都道府県": data.pref,
 			"市区町村": data.city,
