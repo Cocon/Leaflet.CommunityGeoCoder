@@ -36,7 +36,7 @@ npm install @coconmap/leaflet.communitygeocoder
 
 ```typescript
 import L from "leaflet";
-import { GeoCoder } from "leaflet.communitygeocoder";
+import { GeoCoder } from "@coconmap/leaflet.communitygeocoder";
 
 const map = new L.map("map");
 const geoCoderControl = new GeoCoder();
@@ -47,7 +47,7 @@ geoCoderControl.addTo(map);
 
 ```typescript
 import L from "leaflet";
-import { GeoCoder } from "leaflet.communitygeocoder";
+import { GeoCoder } from "@coconmap/leaflet.communitygeocoder";
 
 const map = new L.map("map");
 const geoCoder = GeoCoder.geoCoder(map);
