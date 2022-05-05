@@ -10,9 +10,8 @@ const config: Configuration = {
 	output: {
 		filename: 'bundle.js',
 		library: {
-			type: "window"
+			type: "umd",
 		},
-		libraryTarget: 'umd',
 		globalObject: 'this'
 	},
 	module: {
