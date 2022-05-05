@@ -14,15 +14,17 @@ class Utils {
 			"緯度": latlng.lat,
 			"経度": latlng.lng
 		}));
-		marker.bindPopup(popup);
-		marker.setLatLng(latlng);
-		marker.addTo(map);
-		marker.openPopup();
+		marker.bindPopup(popup); // popupをmarkerに関連付ける
+		marker.setLatLng(latlng); // markerに緯度経度を設定
+		marker.addTo(map); // markerをmapに追加
+		marker.openPopup(); // popupを開く 
 	}
 	static moveTo = (map: L.Map, location: L.LatLng) => {
 		map.flyTo(location);
 	};
 };
+
+type GeoCoderWithoutControl = (address: string) => Promise<Geolonia.NormalizeResult>;
 
 export class GeoCoder extends L.Control {
 	_div: HTMLElement | undefined;
@@ -32,14 +34,14 @@ export class GeoCoder extends L.Control {
 
 	onAdd = (map: L.Map) => {
 		this._div = L.DomUtil.create("div", "leaflet-community-geocoder");
-		this._div.appendChild(new Control(GeoCoder.geoCoder(map)));
+		this._div.appendChild(new Control(GeoCoder.on(map)));
 		return this._div;
 	}
 
-	static geoCoder = (map: L.Map) => {
+	static on = (map: L.Map): GeoCoderWithoutControl => {
+		// 関数を返す
 		return async (address: string) => {
 			const result = await Geolonia.normalize(address);
-			console.log(result);
 			if (result.level >= 3) {
 				// level 3 まで判別できた場合には、緯度経度情報も返ってくる
 				// https://github.com/geolonia/normalize-japanese-addresses/pull/113
@@ -78,6 +80,7 @@ export class GeoCoder extends L.Control {
 			} else {
 				alert("もう少し詳しい住所を入力してください");
 			}
+			return result;
 		}
 	}
 }

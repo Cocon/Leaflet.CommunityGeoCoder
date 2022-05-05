@@ -50,7 +50,7 @@ import L from "leaflet";
 import { GeoCoder } from "leaflet.communitygeocoder";
 
 const map = new L.map("map");
-const geoCoder = GeoCoder.geoCoder(map);
+const geoCoder = GeoCoder.on(map);
 geoCoder("東京都千代田区霞が関1-3-1");
 ```
 
