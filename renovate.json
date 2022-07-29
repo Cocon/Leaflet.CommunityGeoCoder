@@ -4,13 +4,11 @@
         "config:base"
     ],
     "packageRules": [{
-            "packagePatterns": [
-                "^@types/"
-            ],
-            "automerge": true,
-            "major": {
-                "automerge": false
-            }
+            "groupName": "leaflet packages",
+            "matchPackageNames": [
+                "leaflet",
+                "@types/leaflet"
+            ]
         },
         {
             "groupName": "webpack packages",
