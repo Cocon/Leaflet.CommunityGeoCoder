@@ -16,6 +16,9 @@ interface NormalizeResult {
 }
 
 class Utils {
+	/**
+	 * 引数で指定した位置にピンをポップアップマーカーを立てる
+	 */
 	static createPin = (map: L.Map, latlng: L.LatLng, data: ParsedAddress) => {
 		const marker = L.marker(latlng, {
 			alt: `${data.pref} ${data.city} ${data.town}`
@@ -32,6 +35,9 @@ class Utils {
 		marker.addTo(map); // markerをmapに追加
 		marker.openPopup(); // popupを開く 
 	}
+	/**
+	 * 引数で指定した位置に地図の中心を移動する
+	 */
 	static moveTo = (map: L.Map, location: L.LatLng) => {
 		map.flyTo(location);
 	};
@@ -41,6 +47,7 @@ export class GeoCoder extends L.Control {
 	_div: HTMLElement | undefined;
 	private normalizer: Normalizer;
 	private map: L.Map | undefined;
+
 	constructor(normalizer: Normalizer, options?: L.ControlOptions) {
 		super(options);
 		this.normalizer = normalizer
@@ -53,10 +60,17 @@ export class GeoCoder extends L.Control {
 		return this._div;
 	}
 
+	/** 
+	 * Leaflet地図とGeoCoderを関連付けます
+	 */
 	on = (map: L.Map) => {
 		this.map = map
 	}
 
+	/**
+	 * 引数に指定した住所周辺の地図を表示します
+	 * @param address 住所
+	 */
 	search = async (address: string) => {
 		if (this.map == undefined) {
 			throw Error("searchメソッドを呼ぶ前に、GeoCoderをL.Mapオブジェクトと関連付ける必要があります")
@@ -71,6 +85,9 @@ export class GeoCoder extends L.Control {
 		}
 	}
 
+	/**
+	 * コンストラクタで指定した住所パーサーと、@geolonia/japanese-addressesのデータを利用してジオコーディングを行ないます
+	 */
 	private normalizeAddress = async (address: string): Promise<{ latlng: L.LatLng, parsedAddress: ParsedAddress }> => {
 		const result = await this.normalizer(address);
 		if (result.level >= 3) {
