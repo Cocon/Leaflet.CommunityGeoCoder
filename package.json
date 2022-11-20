@@ -35,6 +35,6 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "@geolonia/normalize-japanese-addresses": "2.5.8"
+    "@geolonia/normalize-japanese-addresses": "2.7.2"
   }
 }
