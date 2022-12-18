@@ -1,6 +1,5 @@
 # Leaflet.CommunityGeoCoder
 
-株式会社 Geolonia 様の[オープンソース住所正規化ライブラリ](https://github.com/geolonia/normalize-japanese-addresses)を活用し、
 Leaflet.js 地図に住所検索機能を追加するプラグインです。  
 検索窓に日本国内の住所を入力するとその場所に地図が遷移します。
 
@@ -11,48 +10,72 @@ Leaflet.js 地図に住所検索機能を追加するプラグインです。
 ![demo page](https://i.imgur.com/7oXSJMr.png)
 
 住所を入力してボタンを押すと、地図がその場所まで遷移します。
-町名まで入れていただくとかなりピンポイントな地点まで移動します。
-是非デモページを触って、株式会社 Geolonia 様の高性能なジオコーディングをお試しください！
+町名まで入れていただくと、かなりピンポイントな地点まで移動します。  
+
+なおこちらのサンプルでは、株式会社 Geolonia さんの[オープンソース住所正規化ライブラリ](https://github.com/geolonia/normalize-japanese-addresses)を使用しています。サンプルを触っていただき気に入っていただけましたら、Geoloniaさんの製品もぜひチェックしていただければと思います。
 
 ## Usage
 
-Leaflet 1.x 系に対応しています。
-
-### From CDN (Recommended)
-
-本プラグインは CDN からも利用可能です。サンプルコードは[こちら](https://cocon.github.io/Leaflet.CommunityGeoCoder/demo/)にございます。
-
-```terminal
-https://cdn.jsdelivr.net/npm/@coconmap/leaflet.communitygeocoder/dist/bundle.js
-```
-
-### From NPM (Experimental)
+Leaflet.CommunityGeocoder単体では住所の検索はできません。  
+別途、住所正規化のライブラリをインストールしていただく必要があります。  
+ここでは株式会社 Geolonia さんの`@geolonia/normalize-japanese-addresses`を用いたコードサンプルをご紹介します。
 
 ```bash
 npm install @coconmap/leaflet.communitygeocoder
+npm install @geolonia/normalize-japanese-addresses
 ```
-
-#### Basic usage
 
 ```typescript
 import L from "leaflet";
 import { GeoCoder } from "@coconmap/leaflet.communitygeocoder";
+import { normalize } from "@geolonia/normalize-japanese-addresses";
 
-const map = new L.map("map");
-const geoCoderControl = new GeoCoder();
+const map = new L.Map("map", {
+    center: [35.4477712, 139.6425415],
+    zoom: 13
+});
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+const geoCoderControl = new GeoCoder(normalize);
 geoCoderControl.addTo(map);
 ```
 
-#### Without control
+また、検索フォームはいらない、という場合にはsearchメソッドのみを使うことができます。  
+なおこの場合、searchメソッドを呼び出す前にonメソッドを使ってGeoCoderとLeaflet地図を関連づけておく必要があるので注意してください。
 
 ```typescript
-import L from "leaflet";
-import { GeoCoder } from "@coconmap/leaflet.communitygeocoder";
-
-const map = new L.map("map");
-const geoCoder = GeoCoder.on(map);
-geoCoder("東京都千代田区霞が関1-3-1");
+const geoCoder = new GeoCoder(normalize);
+geoCoder.on(map);
+geoCoder.search("東京都千代田区霞が関1-3-1");
 ```
+
+また、バンドラーを使わない場合はJsDelivrなどのCDNをご利用いただけます。
+
+```text
+https://cdn.jsdelivr.net/npm/@coconmap/leaflet.communitygeocoder/dist/bundle.js
+```
+
+## Development
+
+GeoCoderクラスのコンストラクタ引数である、Normalizerの定義は次のようになっています。
+
+```typescript
+type Normalizer = (address: string, options?: any) => Promise<NormalizeResult>
+interface NormalizeResult {
+ lat: number | null,
+ lng: number | null,
+ pref: string,
+ city: string,
+ town: string,
+ addr: string,
+ level: number
+}
+```
+
+この定義に準拠していさえすればどのようなライブラリでもお使いいただくことができます。  
+もしこのような正規化ライブラリを開発中の方がおられましたら、Issue等で連絡いただけますと光栄です。
 
 ## Author
 

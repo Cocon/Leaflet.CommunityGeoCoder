@@ -1,11 +1,25 @@
 import L from 'leaflet';
-import * as Geolonia from '@geolonia/normalize-japanese-addresses';
 
-import PopupContent from './PopupContent';
 import Control from './Control';
+import PopupContent from './PopupContent';
+
+interface ParsedAddress { pref: string, city: string, town: string }
+type Normalizer = (address: string, options?: any) => Promise<NormalizeResult>
+interface NormalizeResult {
+	lat: number | null,
+	lng: number | null,
+	pref: string,
+	city: string,
+	town: string,
+	addr: string,
+	level: number
+}
 
 class Utils {
-	static createPin = (map: L.Map, latlng: L.LatLng, data: { pref: string, city: string, town: string }) => {
+	/**
+	 * 引数で指定した位置にピンをポップアップマーカーを立てる
+	 */
+	static createPin = (map: L.Map, latlng: L.LatLng, data: ParsedAddress) => {
 		const marker = L.marker(latlng, {
 			alt: `${data.pref} ${data.city} ${data.town}`
 		});
@@ -21,68 +35,85 @@ class Utils {
 		marker.addTo(map); // markerをmapに追加
 		marker.openPopup(); // popupを開く 
 	}
+	/**
+	 * 引数で指定した位置に地図の中心を移動する
+	 */
 	static moveTo = (map: L.Map, location: L.LatLng) => {
 		map.flyTo(location);
 	};
 };
 
-type GeoCoderWithoutControl = (address: string) => Promise<Geolonia.NormalizeResult>;
-
 export class GeoCoder extends L.Control {
 	_div: HTMLElement | undefined;
-	constructor(options?: L.ControlOptions) {
+	private normalizer: Normalizer;
+	private map: L.Map | undefined;
+
+	constructor(normalizer: Normalizer, options?: L.ControlOptions) {
 		super(options);
+		this.normalizer = normalizer
 	}
 
-	onAdd = (map: L.Map) => {
+	override onAdd = (map: L.Map) => {
+		this.map = map;
 		this._div = L.DomUtil.create("div", "leaflet-community-geocoder");
-		this._div.appendChild(new Control(GeoCoder.on(map)));
+		this._div.appendChild(new Control(this.search));
 		return this._div;
 	}
 
-	static on = (map: L.Map): GeoCoderWithoutControl => {
-		// 関数を返す
-		return async (address: string) => {
-			const result = await Geolonia.normalize(address);
-			if (result.level >= 3) {
-				// level 3 まで判別できた場合には、緯度経度情報も返ってくる
-				// https://github.com/geolonia/normalize-japanese-addresses/pull/113
-				const latlng = L.latLng({
-					lat: result.lat || 35,
-					lng: result.lng || 135
-				});
-				Utils.moveTo(map, latlng);
-				Utils.createPin(map, latlng, {
-					pref: result.pref,
-					city: result.city,
-					town: result.town
-				});
-			} else if (result.level == 2) {
-				// level 2 までしか判別できなかった場合は、
-				// 別途データベースに問い合わせ、大まかな位置情報を取得する
-				const url = `https://geolonia.github.io/japanese-addresses/api/ja/${result.pref}/${result.city}.json`;
-				fetch(url).then(response => response.json()).then(json => {
-					const destination = json[0] as {
-						town: string
-						koaza: string
-						lat: string
-						lng: string
-					};
-					const latlng = L.latLng({
-						lat: parseFloat(destination.lat),
-						lng: parseFloat(destination.lng)
-					});
-					Utils.moveTo(map, latlng);
-					Utils.createPin(map, latlng, {
-						pref: result.pref,
-						city: result.city,
-						town: destination.town + destination.koaza
-					});
-				});
-			} else {
-				alert("もう少し詳しい住所を入力してください");
+	/** 
+	 * Leaflet地図とGeoCoderを関連付けます
+	 */
+	on = (map: L.Map) => {
+		this.map = map
+	}
+
+	/**
+	 * 引数に指定した住所周辺の地図を表示します
+	 * @param address 住所
+	 */
+	search = async (address: string) => {
+		if (this.map == undefined) {
+			throw Error("searchメソッドを呼ぶ前に、GeoCoderをL.Mapオブジェクトと関連付ける必要があります")
+		} else {
+			try {
+				const result = await this.normalizeAddress(address)
+				Utils.moveTo(this.map, result.latlng)
+				Utils.createPin(this.map, result.latlng, result.parsedAddress)
+			} catch (error) {
+				alert(error)
 			}
-			return result;
+		}
+	}
+
+	/**
+	 * コンストラクタで指定した住所パーサーと、@geolonia/japanese-addressesのデータを利用してジオコーディングを行ないます
+	 */
+	private normalizeAddress = async (address: string): Promise<{ latlng: L.LatLng, parsedAddress: ParsedAddress }> => {
+		const result = await this.normalizer(address);
+		if (result.level >= 3) {
+			// level 3 まで判別できた場合には、緯度経度情報も返ってくる
+			// https://github.com/geolonia/normalize-japanese-addresses/pull/113
+			return {
+				latlng: L.latLng({ lat: result.lat as number, lng: result.lng as number }),
+				parsedAddress: { pref: result.pref, city: result.city, town: result.town }
+			}
+		} else if (result.level == 2) {
+			// level 2 までしか判別できなかった場合は、
+			// 別途データベースに問い合わせ、大まかな位置情報を取得する
+			const url = `https://geolonia.github.io/japanese-addresses/api/ja/${result.pref}/${result.city}.json`;
+			const json = await fetch(url).then(response => response.json())
+			const destination = json[0] as {
+				town: string
+				koaza: string
+				lat: string
+				lng: string
+			};
+			return {
+				latlng: L.latLng({ lat: parseFloat(destination.lat), lng: parseFloat(destination.lng) }),
+				parsedAddress: { pref: result.pref, city: result.city, town: result.town }
+			}
+		} else {
+			throw Error("もう少し詳しい住所を入力してください");
 		}
 	}
 }
