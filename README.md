@@ -1,24 +1,25 @@
 # Leaflet.CommunityGeoCoder
 
 Leaflet.js 地図に住所検索機能を追加するプラグインです。  
-検索窓に日本国内の住所を入力するとその場所に地図が遷移します。
+検索窓に日本国内の住所を入力すると、その場所にピンを立て、その場所まで遷移します。
 
 ## Demo
 
-[こちら](https://cocon.github.io/Leaflet.CommunityGeoCoder/demo/)に簡単なデモとサンプルコードをご用意しています。
+[こちら](https://cocon.github.io/Leaflet.CommunityGeoCoder/demo/)にデモとサンプルコードを用意しています。
 
-![demo page](https://i.imgur.com/7oXSJMr.png)
+![画面イメージ](https://i.imgur.com/7oXSJMr.png)
 
-住所を入力してボタンを押すと、地図がその場所まで遷移します。
-町名まで入れていただくと、かなりピンポイントな地点まで移動します。  
+住所を入力して検索ボタンを押すと、地図がその場所まで遷移します。
+詳しい住所を入力すれば、かなりピンポイントな地点まで移動します。  
 
-なおこちらのサンプルでは、株式会社 Geolonia さんの[オープンソース住所正規化ライブラリ](https://github.com/geolonia/normalize-japanese-addresses)を使用しています。サンプルを触っていただき気に入っていただけましたら、Geoloniaさんの製品もぜひチェックしていただければと思います。
+なおこちらのサンプルでは、株式会社 Geolonia さんの[オープンソース住所正規化ライブラリ](https://github.com/geolonia/normalize-japanese-addresses)を使用しています。
+サンプルを触っていただき気に入っていただけましたら、Geoloniaさんの製品もぜひチェックしていただきたいです！
 
 ## Usage
 
 Leaflet.CommunityGeocoder単体では住所の検索はできません。  
 別途、住所正規化のライブラリをインストールしていただく必要があります。  
-ここでは株式会社 Geolonia さんの`@geolonia/normalize-japanese-addresses`を用いたコードサンプルをご紹介します。
+ここでは株式会社 Geolonia さんの`@geolonia/normalize-japanese-addresses`を用いた例をご紹介します。
 
 ```bash
 npm install @coconmap/leaflet.communitygeocoder
@@ -51,7 +52,7 @@ geoCoder.on(map);
 geoCoder.search("東京都千代田区霞が関1-3-1");
 ```
 
-また、バンドラーを使わない場合はJsDelivrなどのCDNをご利用いただけます。
+バンドラーを使わない場合はJsDelivrなどのCDNをご利用いただけます。
 
 ```text
 https://cdn.jsdelivr.net/npm/@coconmap/leaflet.communitygeocoder/dist/bundle.js
@@ -74,12 +75,12 @@ interface NormalizeResult {
 }
 ```
 
-この定義に準拠していさえすればどのようなライブラリでもお使いいただくことができます。  
-もしこのような正規化ライブラリを開発中の方がおられましたら、Issue等で連絡いただけますと光栄です。
+この定義に準拠していさえすればどのようなライブラリでもお使いいただけます。  
+もしこのような正規化ライブラリを開発中の方がおられましたら、Issue等で連絡いただけますと嬉しいです。
 
 ## Author
 
-YUUKIToriyama([@CoconMap](https://mobile.twitter.com/CoconMap/))
+Torichan([@CoconMap](https://mobile.twitter.com/CoconMap/))
 
 ## Thanks to
 
