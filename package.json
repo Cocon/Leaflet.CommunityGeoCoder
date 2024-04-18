@@ -1,7 +1,7 @@
 {
   "name": "@coconmap/leaflet.communitygeocoder",
   "version": "2.0.0",
-  "description": "Leaflet.js plugin for geocoding addressed of Japan",
+  "description": "Leaflet.js plugin to pin the location of the address in Japan",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf ./dist && tsc",
