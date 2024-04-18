@@ -5,7 +5,7 @@ Leaflet.js 地図に住所検索機能を追加するプラグインです。
 
 ## Demo
 
-[こちら](https://cocon.github.io/Leaflet.CommunityGeoCoder/demo/)にデモとサンプルコードを用意しています。
+[こちら](https://cocon.github.io/Leaflet.CommunityGeoCoder/index.html)にデモとサンプルコードを用意しています。
 
 ![画面イメージ](https://i.imgur.com/7oXSJMr.png)
 
