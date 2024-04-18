@@ -1,6 +1,6 @@
 {
   "name": "@coconmap/leaflet.communitygeocoder",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Leaflet.js plugin to pin the location of the address in Japan",
   "main": "dist/index.js",
   "scripts": {
