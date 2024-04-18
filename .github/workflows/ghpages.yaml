@@ -1,0 +1,24 @@
+name: Deploy demo page to GitHub Pages
+
+on:
+  push:
+    branches: [ 'main' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build package
+        run: npm run build:web
+
+      - name: Move files
+        run: |
+          mv ./dist ./demo
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./demo
