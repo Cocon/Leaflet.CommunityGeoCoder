@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Demo | Leaflet.CommunityGeoCoder</title>
+	<link rel="author" href="https://github.com/YUUKIToriyama">
+	<link rel="help" href="https://github.com/Cocon/Leaflet.CommunityGeoCoder">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.8.0/dist/leaflet.css">
+	<script src="https://cdn.jsdelivr.net/npm/leaflet@1.8.0/dist/leaflet.js"></script>
+	<script src="./dist/bundle.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@geolonia/normalize-japanese-addresses@2.7.2/dist/main-browser.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+	<style>
+		#my_map {
+			width: 500px;
+			height: 500px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="my_map"></div>
+	<script src="./main.js"></script>
+	<pre class="prettyprint"><code id="code"></code></pre>
+	<script>
+		fetch("./main.js").then(result => {
+			return result.text();
+		}).then(text => {
+			document.getElementById("code").innerText = text;
+		})
+	</script>
+</body>
+
+</html>
