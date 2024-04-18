@@ -16,7 +16,7 @@
     "geocoding",
     "leaflet-plugin"
   ],
-  "author": "YUUKIToriyama <github@toriyama.dev>",
+  "author": "Torichan <github@toriyama.dev>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Cocon/Leaflet.CommunityGeoCoder/issues"
