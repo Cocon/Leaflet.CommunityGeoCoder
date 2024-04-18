@@ -1,13 +1,12 @@
 {
   "name": "@coconmap/leaflet.communitygeocoder",
   "version": "2.0.0",
-  "description": "Leaflet.js plugin for geocoding addressed of Japan",
+  "description": "Leaflet.js plugin to pin the location of the address in Japan",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf ./dist && tsc",
     "build:web": "webpack --config webpack.config.ts",
-    "prepublishOnly": "npm run build && npm run build:web",
-    "test": "jest"
+    "prepublishOnly": "npm run build && npm run build:web"
   },
   "repository": {
     "type": "git",
@@ -15,10 +14,9 @@
   },
   "keywords": [
     "geocoding",
-    "leaflet-plugin",
-    "geolonia"
+    "leaflet-plugin"
   ],
-  "author": "YUUKIToriyama <github@toriyama.dev>",
+  "author": "Torichan <github@toriyama.dev>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Cocon/Leaflet.CommunityGeoCoder/issues"
@@ -26,9 +24,7 @@
   "homepage": "https://github.com/Cocon/Leaflet.CommunityGeoCoder#readme",
   "devDependencies": {
     "@types/leaflet": "^1.7.9",
-    "jest": "^28.0.3",
     "leaflet": "^1.8.0",
-    "ts-jest": "^28.0.1",
     "ts-loader": "^9.3.0",
     "ts-node": "^10.7.0",
     "typescript": "5.1.3",
